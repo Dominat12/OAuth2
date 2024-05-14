@@ -1,0 +1,34 @@
+
+
+
+
+# https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#web.security.oauth2.authorization-server
+spring:
+  application:
+#    name: AuthServer
+  security:
+    user:
+      # bcrypt of password
+      # Aufbau: {bcrypt} + Variante von BCrypt (2a,b,y) + Rounds/Kostenfaktor/Workload (04-31) + Salt + Hash
+      password: '{bcrypt}$2a$14$wAytVtOdFf3zexfmwugM7u0HmyN/L2YCcTeQ651SjuhW8Qy2ajMgG'
+  sql:
+    init:
+      schema-locations:
+      # Spring Authorization class paths
+      - 'classpath:org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql'
+      - 'classpath:org/springframework/security/oauth2/server/authorization/oauth2-authorization-consent-schema.sql'
+        # https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql
+      - 'classpath:org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql'
+server:
+  port: 9090
+jwt:
+  key:
+    # Wir nutzen das RSA-Kryptosystem, daher brauchen wir ein Schlüsselpaar
+    # Id ist lediglich die ID des Schlüssels
+    # public und private sind die Pfade zu den Schlüsseln
+    # Die Schlüssel sind im PEM-Format (https://docs.spring.io/spring-boot/docs/3.1.x/reference/htmlsingle/#features.security.jwt)
+    # Public Key wird zum Verschlüsseln genutzt
+    # Private Key wird zum Entschlüsseln genutzt
+    id: 'configured-f57f-46a2-b502-8a24c308be7f'
+    public: classpath:app.pub
+    private: classpath:app.key

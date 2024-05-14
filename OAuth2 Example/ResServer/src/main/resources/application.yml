@@ -1,0 +1,13 @@
+server:
+  port: 7070
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # issuer-uri signalisiert dem Resource Server,
+          # dass er den Authorization Server unter der angegebenen URL finden kann.
+          # Dank der Security Auto-Configuration reicht diese Einstellung!! aus,
+          # dass die Security nun darüber abläuft.
+          # Das Setzen der Property, sagt, wir nutzen OAuth2 mit JWT, sind ein ResourceServer und wir haben einer Authorization Server
+          issuer-uri: http://localhost:9090

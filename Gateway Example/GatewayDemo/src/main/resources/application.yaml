@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          # id ist einefach ein Name zur Identifikation
+          - id: my_route
+            uri: http://localhost:8090
+            #
+            predicates:
+              - Path=/sample/**
+            # hier können Anpassungen vorgenommen werden für das Request das abgesetzt wird
+            # sowird durch den Filter PrefixPath=/api der String "api" vor den Pfad gesetzt
+            # (ein Vorteil ist, dass dadurch nicht für alle die internen Endpunkte bekannt sind & API Versionen einfach geändert werden können)
+            # es könne noch viele weitere Anpassungen gemacht werden
+            filters:
+              - PrefixPath=/v1
